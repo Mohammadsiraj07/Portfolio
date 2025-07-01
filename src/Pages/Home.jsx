@@ -25,7 +25,7 @@ const MainTitle = memo(() => (
       <span className="relative inline-block">
         <span className="absolute -inset-2 bg-gradient-to-r from-[#6366f1] to-[#a855f7] blur-2xl opacity-20"></span>
         <span className="relative bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-          Frontend
+          Full Stack
         </span>
       </span>
       <br />
@@ -75,14 +75,14 @@ const SocialLink = memo(({ icon: Icon, link }) => (
 
 // Constants
 const TYPING_SPEED = 100;
-const ERASING_SPEED = 50;
-const PAUSE_DURATION = 2000;
-const WORDS = ["Network & Telecom Student", "Tech Enthusiast"];
-const TECH_STACK = ["React", "Javascript", "Node.js", "Tailwind"];
+const ERASING_SPEED = 100;
+const PAUSE_DURATION = 1000;
+const WORDS = ["UI/UX Designer & AI Enthusiast", "Vibe Coder","Tech Enthusiast"];
+const TECH_STACK = ["React", "Javascript", "Node.js", "Supabase","Figma"];
 const SOCIAL_LINKS = [
-  { icon: Github, link: "https://github.com/EkiZR" },
-  { icon: Linkedin, link: "https://www.linkedin.com/in/ekizr/" },
-  { icon: Instagram, link: "https://www.instagram.com/ekizr._/?hl=id" }
+  { icon: Github, link: "https://github.com/Mohammadsiraj07" },
+  { icon: Linkedin, link: "https://www.linkedin.com/in/mohammad-siraj-7648692b6" },
+  { icon: Instagram, link: "https://www.instagram.com/sijjubhaii?igsh=MXc5ZzdmNzRrZmhhMg==" }
 ];
 
 const Home = () => {
@@ -150,11 +150,11 @@ const Home = () => {
       preserveAspectRatio: 'xMidYMid slice',
       progressiveLoad: true,
     },
-    style: { width: "100%", height: "100%" },
+    style: { width: "120%", height: "120%" },
     className: `w-full h-full transition-all duration-500 ${
       isHovering 
-        ? "scale-[180%] sm:scale-[160%] md:scale-[150%] lg:scale-[145%] rotate-2" 
-        : "scale-[175%] sm:scale-[155%] md:scale-[145%] lg:scale-[140%]"
+        ? "scale-[210%] sm:scale-[190%] md:scale-[170%] lg:scale-[160%] rotate-2" 
+        : "scale-[200%] sm:scale-[180%] md:scale-[160%] lg:scale-[150%]"
     }`
   };
 
@@ -183,7 +183,7 @@ const Home = () => {
                 <p className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed font-light"
                   data-aos="fade-up"
                   data-aos-delay="1000">
-                  Menciptakan Website Yang Inovatif, Fungsional, dan User-Friendly untuk Solusi Digital.
+                  Blending Creativity and Code to Craft Premium Digital Interfaces.
                 </p>
 
                 {/* Tech Stack */}

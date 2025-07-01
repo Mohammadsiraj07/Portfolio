@@ -107,15 +107,11 @@ const techStacks = [
   { icon: "html.svg", language: "HTML" },
   { icon: "css.svg", language: "CSS" },
   { icon: "javascript.svg", language: "JavaScript" },
-  { icon: "tailwind.svg", language: "Tailwind CSS" },
   { icon: "reactjs.svg", language: "ReactJS" },
   { icon: "vite.svg", language: "Vite" },
   { icon: "nodejs.svg", language: "Node JS" },
-  { icon: "bootstrap.svg", language: "Bootstrap" },
-  { icon: "firebase.svg", language: "Firebase" },
-  { icon: "MUI.svg", language: "Material UI" },
-  { icon: "vercel.svg", language: "Vercel" },
-  { icon: "SweetAlert.svg", language: "SweetAlert2" },
+  { icon: "supabase-icon.svg", language: "Supabase" },
+  { icon: "figma-icon.svg", language: "Figma" },
 ];
 
 export default function FullWidthTabs() {
@@ -151,11 +147,18 @@ export default function FullWidthTabs() {
       const projectData = projectsResponse.data || [];
       const certificateData = certificatesResponse.data || [];
 
-      setProjects(projectData);
+      // Normalize project data to add an 'image' property, which the details page likely expects.
+      // This keeps the original 'Img' property so the project list page doesn't break.
+      const normalizedProjects = projectData.map(project => ({
+        ...project,
+        image: project.Img,
+      }));
+
+      setProjects(normalizedProjects);
       setCertificates(certificateData);
 
       // Store in localStorage (fungsionalitas ini tetap dipertahankan)
-      localStorage.setItem("projects", JSON.stringify(projectData));
+      localStorage.setItem("projects", JSON.stringify(normalizedProjects));
       localStorage.setItem("certificates", JSON.stringify(certificateData));
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
@@ -165,16 +168,32 @@ export default function FullWidthTabs() {
 
 
   useEffect(() => {
-    // Coba ambil dari localStorage dulu untuk laod lebih cepat
-    const cachedProjects = localStorage.getItem('projects');
-    const cachedCertificates = localStorage.getItem('certificates');
+    const loadAndNormalizeData = () => {
+      // First, try to load data from localStorage for a faster initial load.
+      const cachedProjects = localStorage.getItem('projects');
+      const cachedCertificates = localStorage.getItem('certificates');
 
-    if (cachedProjects && cachedCertificates) {
-        setProjects(JSON.parse(cachedProjects));
+      if (cachedProjects) {
+        const parsedProjects = JSON.parse(cachedProjects);
+        // This is the key fix: We normalize the cached data immediately.
+        // This ensures that if a user navigates to the details page quickly,
+        // the data in localStorage has the correct 'image' property.
+        const normalizedProjects = parsedProjects.map(p => ({
+          ...p,
+          image: p.Img || p.image, // Use existing 'image' or create from 'Img'
+        }));
+
+        setProjects(normalizedProjects);
+        localStorage.setItem('projects', JSON.stringify(normalizedProjects)); // Update localStorage right away
+      }
+      if (cachedCertificates) {
         setCertificates(JSON.parse(cachedCertificates));
-    }
-    
-    fetchData(); // Tetap panggil fetchData untuk sinkronisasi data terbaru
+      }
+      // Always fetch fresh data from Supabase to ensure the portfolio is up-to-date.
+      fetchData();
+    };
+
+    loadAndNormalizeData();
   }, [fetchData]);
 
   const handleChange = (event, newValue) => {
