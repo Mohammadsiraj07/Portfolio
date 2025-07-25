@@ -113,22 +113,10 @@ const StatCard = memo(({ icon: Icon, color, value, label, description, animation
 ));
 
 const AboutPage = () => {
-  // Memoized calculations
-  const { totalProjects, totalCertificates, YearExperience } = useMemo(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects") || "[]");
-    const storedCertificates = JSON.parse(localStorage.getItem("certificates") || "[]");
-    
-    const startDate = new Date("2021-11-06");
-    const today = new Date();
-    const experience = today.getFullYear() - startDate.getFullYear() -
-      (today < new Date(today.getFullYear(), startDate.getMonth(), startDate.getDate()) ? 1 : 0);
-
-    return {
-      totalProjects: storedProjects.length,
-      totalCertificates: storedCertificates.length,
-      YearExperience: experience
-    };
-  }, []);
+  // Static stats data - no localStorage dependency
+  const totalProjects = 3;
+  const totalCertificates = 3;
+  const YearExperience = 0;
 
   // Optimized AOS initialization
   useEffect(() => {
@@ -154,7 +142,7 @@ const AboutPage = () => {
     };
   }, []);
 
-  // Memoized stats data
+  // Memoized stats data with static values
   const statsData = useMemo(() => [
     {
       icon: Code,
@@ -180,7 +168,7 @@ const AboutPage = () => {
       description: "Continuous learning journey",
       animation: "fade-left",
     },
-  ], [totalProjects, totalCertificates, YearExperience]);
+  ], []); // Empty dependency array since values are static
 
   return (
     <div
